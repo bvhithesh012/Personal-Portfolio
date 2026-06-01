@@ -1,0 +1,105 @@
+=================================
+PROJECT NAVIGATION & GITHUB INTEGRATION
+=================================
+
+IMPORTANT:
+
+Each project card must be fully clickable.
+
+When a visitor clicks or taps on a project card, GitHub button, project image, or "View Project" button, redirect them to the project's GitHub repository in a new browser tab.
+
+Project 1
+
+Title:
+AI Credit Risk Assessment System
+
+GitHub Repository:
+https://github.com/bvhithesh012/AI-Agent-Credit-Risk-Assessment
+
+Behavior:
+- Clicking anywhere on the project card opens the repository.
+- Include a "View Source Code" button.
+- Include a GitHub icon button.
+- Open link in new tab.
+- Add hover animation indicating the card is clickable.
+
+Project 2
+
+Title:
+Vehicle Spare Parts Management System
+
+GitHub Repository:
+https://github.com/bvhithesh012/vehicle-Spare-Parts-Store
+
+Behavior:
+- Clicking anywhere on the project card opens the repository.
+- Include a "View Source Code" button.
+- Include a GitHub icon button.
+- Open link in new tab.
+- Add hover animation indicating the card is clickable.
+
+=================================
+PROJECT INTERACTION EXPERIENCE
+=================================
+
+When a project card is hovered:
+
+- Card lifts in 3D.
+- Spotlight effect follows cursor.
+- Repository icon glows.
+- Project preview animates.
+- Display "Click to Explore Project" message.
+
+When tapped on mobile:
+
+- Card expands slightly.
+- Shows project details.
+- Displays GitHub action button.
+
+Desktop Experience:
+
+- Hover reveals repository information.
+- Click redirects to GitHub.
+
+Mobile Experience:
+
+- Tap once shows project details.
+- Tap again opens repository.
+
+=================================
+PROJECT SHOWCASE
+=================================
+
+Generate project showcase cards with:
+
+- Live GitHub statistics
+- Repository links
+- Technology stack badges
+- Animated code background
+- Glassmorphism effects
+- 3D hover effects
+- GitHub branding
+
+Display:
+
+AI Credit Risk Assessment
+→ View Project
+
+Vehicle Spare Parts Management System
+→ View Project
+
+Both buttons should redirect directly to their respective GitHub repositories.
+
+=================================
+OPTIONAL ENHANCEMENT
+=================================
+
+Fetch and display automatically from GitHub:
+
+- Repository name
+- Description
+- Primary language
+- Stars
+- Last updated date
+
+using the GitHub API for a more dynamic portfolio experience.
