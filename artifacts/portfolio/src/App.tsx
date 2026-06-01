@@ -6,6 +6,7 @@ import { Education } from './components/Education';
 import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
 import { AITools } from './components/AITools';
+import { Certificates } from './components/Certificates';
 import { ThreeBackground } from './components/ThreeBackground';
 import { LoadingScreen } from './components/LoadingScreen';
 import { useState, useEffect } from 'react';
@@ -54,6 +55,7 @@ function App() {
             <About />
             <Skills />
             <Education />
+            <Certificates />
             <Projects />
             <AITools />
             <Contact />
