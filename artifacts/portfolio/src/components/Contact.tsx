@@ -18,7 +18,7 @@ export function Contact() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-5xl font-bold mb-4" style={{ color: '#F5F5F5' }}>
-            <span className="font-mono text-xl mr-4" style={{ color: '#FF6B00' }}>04.</span>
+            <span className="font-mono text-xl mr-4" style={{ color: '#FF6B00' }}>05.</span>
             Let's Connect
           </h2>
           <div className="w-24 h-[2px] mx-auto mb-6" style={{ background: 'linear-gradient(90deg,#FF6B00,#B87333)' }} />

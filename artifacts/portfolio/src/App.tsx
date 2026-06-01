@@ -5,6 +5,7 @@ import { Skills } from './components/Skills';
 import { Education } from './components/Education';
 import { Projects } from './components/Projects';
 import { Contact } from './components/Contact';
+import { AITools } from './components/AITools';
 import { ThreeBackground } from './components/ThreeBackground';
 import { LoadingScreen } from './components/LoadingScreen';
 import { useState, useEffect } from 'react';
@@ -54,6 +55,7 @@ function App() {
             <Skills />
             <Education />
             <Projects />
+            <AITools />
             <Contact />
           </main>
 

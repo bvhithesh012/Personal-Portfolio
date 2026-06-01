@@ -16,6 +16,7 @@ export function Navigation() {
     { name: 'About', href: '#about' },
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
+    { name: 'AI Tools', href: '#aitools' },
     { name: 'Contact', href: '#contact' },
   ];
 
