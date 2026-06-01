@@ -17,6 +17,7 @@ interface Certificate {
   accent: string;
   glow: string;
   image: string | null;
+  file: string | null;
   verificationLink: string | null;
 }
 
@@ -31,6 +32,7 @@ const CERTIFICATES: Certificate[] = [
     accent: '#FF6B00',
     glow: 'rgba(255,107,0,0.35)',
     image: null,
+    file: '/certs/hackerrank-sql.pdf',
     verificationLink: 'https://www.hackerrank.com/certificates',
   },
   {
@@ -43,6 +45,7 @@ const CERTIFICATES: Certificate[] = [
     accent: '#B87333',
     glow: 'rgba(184,115,51,0.35)',
     image: null,
+    file: '/certs/hackerrank-python.pdf',
     verificationLink: 'https://www.hackerrank.com/certificates',
   },
   {
@@ -50,11 +53,12 @@ const CERTIFICATES: Certificate[] = [
     title: 'GenAI Powered Data Analytics Job Simulation',
     issuer: 'Forage',
     issuerShort: 'FG',
-    issueDate: '2024',
+    issueDate: 'February 2026',
     category: 'AI & Data',
     accent: '#FFB000',
     glow: 'rgba(255,176,0,0.35)',
     image: null,
+    file: '/certs/forage-genai.pdf',
     verificationLink: null,
   },
   {
@@ -67,6 +71,7 @@ const CERTIFICATES: Certificate[] = [
     accent: '#60a5fa',
     glow: 'rgba(96,165,250,0.3)',
     image: null,
+    file: '/certs/ibm-python.pdf',
     verificationLink: null,
   },
 ];
@@ -398,10 +403,10 @@ function CertificateViewer({
                   title="Verify certificate" color={cert.accent} />
               )}
 
-              {/* Download (only if actual image) */}
-              {cert.image && (
-                <a href={cert.image} download>
-                  <ToolButton icon={<Download size={15} />} onClick={() => {}} title="Download" color={cert.accent} />
+              {/* Download PDF */}
+              {cert.file && (
+                <a href={cert.file} download>
+                  <ToolButton icon={<Download size={15} />} onClick={() => {}} title="Download certificate" color={cert.accent} />
                 </a>
               )}
 
@@ -413,25 +418,41 @@ function CertificateViewer({
           </div>
 
           {/* Certificate display */}
-          <div className="flex-1 overflow-auto flex items-center justify-center p-6"
-            style={{ minHeight: 0, background: '#080808' }}>
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: zoom }}
-              transition={{ duration: 0.2 }}
-              style={{ width: '100%', maxWidth: 720, aspectRatio: '4/3', transformOrigin: 'center center' }}
-            >
-              {cert.image ? (
+          <div className="flex-1 flex flex-col" style={{ minHeight: 0, background: '#080808' }}>
+            {cert.file ? (
+              <motion.div
+                key={index}
+                className="flex-1 flex flex-col"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.25 }}
+              >
+                <iframe
+                  src={`${cert.file}#toolbar=1&navpanes=0&view=FitH`}
+                  title={cert.title}
+                  className="w-full flex-1 border-0"
+                  style={{ minHeight: '60vh' }}
+                />
+              </motion.div>
+            ) : cert.image ? (
+              <motion.div
+                key={index}
+                className="flex-1 flex items-center justify-center p-6"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: zoom }}
+                transition={{ duration: 0.2 }}
+                style={{ transformOrigin: 'center center' }}
+              >
                 <img src={cert.image} alt={cert.title}
-                  className="w-full h-full object-contain rounded-lg" />
-              ) : (
-                <div className="w-full h-full rounded-lg overflow-hidden"
-                  style={{ border: `1px solid ${cert.accent}25` }}>
+                  className="max-w-full max-h-full object-contain rounded-lg" />
+              </motion.div>
+            ) : (
+              <div className="flex-1 flex items-center justify-center p-6">
+                <div className="w-full rounded-lg overflow-hidden" style={{ maxWidth: 720, aspectRatio: '4/3', border: `1px solid ${cert.accent}25` }}>
                   <CertPlaceholder cert={cert} large />
                 </div>
-              )}
-            </motion.div>
+              </div>
+            )}
           </div>
 
           {/* Bottom bar — nav + counter */}
@@ -557,35 +578,6 @@ export function Certificates() {
             <MobileCarousel certs={CERTIFICATES} onSelect={openViewer} />
           </div>
 
-          {/* "No images yet" notice */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4 }}
-            className="mt-8 flex items-center gap-3 px-4 py-3 rounded-lg"
-            style={{
-              background: 'rgba(255,107,0,0.05)',
-              border: '1px solid rgba(255,107,0,0.12)',
-            }}
-          >
-            <Shield size={14} style={{ color: '#FF6B00', flexShrink: 0 }} />
-            <p className="text-xs font-mono" style={{ color: '#71797E' }}>
-              To display actual certificate images, add them to{' '}
-              <code className="px-1.5 py-0.5 rounded text-[11px]"
-                style={{ background: 'rgba(255,255,255,0.06)', color: '#A8A8A8' }}>
-                /public/certs/
-              </code>{' '}
-              and update the <code className="px-1.5 py-0.5 rounded text-[11px]"
-                style={{ background: 'rgba(255,255,255,0.06)', color: '#A8A8A8' }}>
-                image
-              </code>{' '}
-              field in <code className="px-1.5 py-0.5 rounded text-[11px]"
-                style={{ background: 'rgba(255,255,255,0.06)', color: '#A8A8A8' }}>
-                Certificates.tsx
-              </code>.
-            </p>
-          </motion.div>
 
         </div>
       </section>
