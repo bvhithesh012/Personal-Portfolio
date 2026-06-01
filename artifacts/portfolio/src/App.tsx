@@ -9,6 +9,7 @@ import { ThreeBackground } from './components/ThreeBackground';
 import { LoadingScreen } from './components/LoadingScreen';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Github, Linkedin } from 'lucide-react';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -25,28 +26,28 @@ function App() {
   return (
     <>
       <AnimatePresence>
-        {loading ? (
-          <LoadingScreen onComplete={() => setLoading(false)} />
-        ) : null}
+        {loading ? <LoadingScreen onComplete={() => setLoading(false)} /> : null}
       </AnimatePresence>
 
       {!loading && (
-        <div className="relative w-full text-slate-200 selection:bg-cyan-500/30 font-sans">
-          {/* Custom Cursor */}
+        <div className="relative w-full selection:bg-orange-500/20" style={{ color: '#F5F5F5' }}>
+          {/* Custom cursor — burnt orange */}
           <motion.div
-            className="fixed top-0 left-0 w-6 h-6 rounded-full bg-cyan-400/30 border border-cyan-400 pointer-events-none z-[100] mix-blend-screen hidden md:block backdrop-blur-[2px]"
+            className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-[100] mix-blend-screen hidden md:block"
+            style={{ border: '1px solid #FF6B00', background: 'rgba(255,107,0,0.12)' }}
             animate={{ x: mousePosition.x - 12, y: mousePosition.y - 12 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200, mass: 0.5 }}
           />
           <motion.div
-            className="fixed top-0 left-0 w-2 h-2 rounded-full bg-cyan-400 pointer-events-none z-[100] hidden md:block shadow-[0_0_10px_#00f5ff]"
-            animate={{ x: mousePosition.x - 4, y: mousePosition.y - 4 }}
+            className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full pointer-events-none z-[100] hidden md:block"
+            style={{ background: '#FF6B00', boxShadow: '0 0 8px #FF6B00' }}
+            animate={{ x: mousePosition.x - 3, y: mousePosition.y - 3 }}
             transition={{ type: 'spring', damping: 40, stiffness: 400, mass: 0.1 }}
           />
 
           <ThreeBackground />
           <Navigation />
-          
+
           <main>
             <Hero />
             <About />
@@ -56,22 +57,54 @@ function App() {
             <Contact />
           </main>
 
-          <footer className="py-8 border-t border-white/10 bg-black/40 backdrop-blur-md text-center relative z-10">
-            <div className="container mx-auto px-6 flex flex-col items-center gap-4">
-              <p className="text-gray-400 font-mono text-sm max-w-2xl text-center italic">
+          <footer className="py-10 relative z-10" style={{ borderTop: '1px solid rgba(255,255,255,0.04)', background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(12px)' }}>
+            <div className="container mx-auto px-6 flex flex-col items-center gap-5">
+              <p className="font-mono text-sm italic text-center max-w-xl" style={{ color: '#71797E' }}>
                 "Turning ideas into scalable software solutions through code, creativity, and continuous innovation."
               </p>
-              
-              <button 
+
+              <div className="flex items-center gap-5">
+                <a href="https://github.com/Hithesh30" target="_blank" rel="noreferrer"
+                  className="transition-all duration-200 hover:scale-110"
+                  style={{ color: '#2C3539' }}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#F5F5F5'}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#2C3539'}
+                >
+                  <Github size={20} />
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noreferrer"
+                  className="transition-all duration-200 hover:scale-110"
+                  style={{ color: '#2C3539' }}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#FF6B00'}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#2C3539'}
+                >
+                  <Linkedin size={20} />
+                </a>
+              </div>
+
+              <button
                 onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-cyan-500 hover:text-black hover:border-cyan-400 transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+                className="w-9 h-9 rounded flex items-center justify-center transition-all duration-200 font-mono text-sm"
+                style={{ border: '1px solid rgba(255,107,0,0.2)', color: '#71797E', background: 'transparent' }}
+                onMouseEnter={e => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.background = '#FF6B00';
+                  el.style.color = '#0A0A0A';
+                  el.style.borderColor = '#FF6B00';
+                }}
+                onMouseLeave={e => {
+                  const el = e.currentTarget as HTMLElement;
+                  el.style.background = 'transparent';
+                  el.style.color = '#71797E';
+                  el.style.borderColor = 'rgba(255,107,0,0.2)';
+                }}
                 aria-label="Back to top"
               >
                 ↑
               </button>
 
-              <p className="text-xs text-gray-600 mt-2 font-mono">
-                &copy; 2026 Bojanala Venugopal Hithesh. Built with React, Tailwind & Three.js.
+              <p className="text-xs font-mono" style={{ color: '#2C3539' }}>
+                © 2026 Bojanala Venugopal Hithesh. All rights reserved.
               </p>
             </div>
           </footer>
