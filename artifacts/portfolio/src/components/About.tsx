@@ -15,8 +15,9 @@ export function About() {
   ];
 
   const languages = [
-    { name: "English", level: "Professional" },
-    { name: "Telugu", level: "Native" }
+    { name: "Telugu", level: "Native", pct: 100, color: "from-purple-500 to-fuchsia-500", glow: "rgba(168,85,247,0.4)" },
+    { name: "English", level: "Professional", pct: 85, color: "from-cyan-500 to-blue-500", glow: "rgba(0,245,255,0.4)" },
+    { name: "Hindi", level: "Conversational", pct: 60, color: "from-blue-500 to-indigo-500", glow: "rgba(59,130,246,0.4)" },
   ];
 
   return (
@@ -109,23 +110,69 @@ export function About() {
                 <Languages className="text-blue-400" size={24} />
                 <h3 className="text-xl font-bold">Languages</h3>
               </div>
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-3">
                 {languages.map((lang, i) => (
-                  <div key={i} className="flex flex-col gap-1">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-300">{lang.name}</span>
-                      <span className="text-cyan-400 font-mono text-xs">{lang.level}</span>
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 + i * 0.1 }}
+                    whileHover={{ scale: 1.02 }}
+                    className="group relative rounded-xl border border-white/10 p-4 bg-white/[0.03] backdrop-blur-sm overflow-hidden cursor-default transition-colors hover:border-white/20"
+                    style={{ boxShadow: '0 0 0 0 transparent' }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLElement).style.boxShadow = `0 0 20px ${lang.glow}`;
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLElement).style.boxShadow = '0 0 0 0 transparent';
+                    }}
+                  >
+                    {/* background glow on hover */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"
+                      style={{ background: `radial-gradient(ellipse at center, ${lang.glow.replace('0.4', '0.07')}, transparent 70%)` }}
+                    />
+
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="font-semibold text-white text-sm tracking-wide">{lang.name}</span>
+                        <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border bg-gradient-to-r ${lang.color} bg-clip-text text-transparent border-white/20`}>
+                          {lang.level}
+                        </span>
+                      </div>
+
+                      {/* Proficiency bar */}
+                      <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${lang.pct}%` }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 1.2, delay: 0.5 + i * 0.15, ease: 'easeOut' }}
+                          className={`h-full rounded-full bg-gradient-to-r ${lang.color}`}
+                          style={{ boxShadow: `0 0 8px ${lang.glow}` }}
+                        />
+                      </div>
+
+                      {/* Dot indicators */}
+                      <div className="flex gap-1.5 mt-2.5">
+                        {Array.from({ length: 5 }).map((_, dot) => {
+                          const filled = dot < Math.round(lang.pct / 20);
+                          return (
+                            <motion.div
+                              key={dot}
+                              initial={{ scale: 0 }}
+                              whileInView={{ scale: 1 }}
+                              viewport={{ once: true }}
+                              transition={{ delay: 0.7 + i * 0.15 + dot * 0.06, type: 'spring', stiffness: 300 }}
+                              className={`w-2 h-2 rounded-full transition-colors ${filled ? `bg-gradient-to-r ${lang.color}` : 'bg-white/10'}`}
+                              style={filled ? { boxShadow: `0 0 6px ${lang.glow}` } : {}}
+                            />
+                          );
+                        })}
+                      </div>
                     </div>
-                    <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                      <motion.div 
-                        initial={{ width: 0 }}
-                        whileInView={{ width: lang.level === 'Native' ? '100%' : '80%' }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: 0.5 }}
-                        className={`h-full ${lang.level === 'Native' ? 'bg-purple-500' : 'bg-cyan-500'}`}
-                      />
-                    </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>
