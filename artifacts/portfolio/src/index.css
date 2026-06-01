@@ -109,3 +109,93 @@ body::before {
 ::-webkit-scrollbar-thumb:hover {
   background: #FFB000;
 }
+
+/* ── Custom cursor — hide native on desktop ── */
+@media (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
+/* Typewriter cursor blink */
+@keyframes cursorblink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Scroll reveal utilities ── */
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(255,107,0,0.3); }
+  50%       { box-shadow: 0 0 24px rgba(255,107,0,0.7), 0 0 48px rgba(255,107,0,0.25); }
+}
+
+/* ── Ripple effect for buttons ── */
+.ripple-btn {
+  position: relative;
+  overflow: hidden;
+}
+.ripple-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--rx, 50%) var(--ry, 50%), rgba(255,255,255,0.15) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.ripple-btn:active::after {
+  opacity: 1;
+}
+
+/* ── Section depth separator ── */
+.section-separator {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,107,0,0.15) 30%, rgba(184,115,51,0.15) 70%, transparent 100%);
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* ── Holographic shimmer ── */
+@keyframes holoShimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.holo-text {
+  background: linear-gradient(90deg, #FF6B00 0%, #FFB000 25%, #B87333 50%, #FF6B00 75%, #FFB000 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: holoShimmer 4s linear infinite;
+}
+
+/* ── Energy line scan ── */
+@keyframes scanLine {
+  0%   { top: -2px; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+.scan-effect::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,107,0,0.6), transparent);
+  animation: scanLine 3s ease-in-out infinite;
+  pointer-events: none;
+}

@@ -1,0 +1,192 @@
+=================================
+IMMERSIVE 3D EXPERIENCE REQUIREMENTS
+=================================
+
+This must NOT be a normal portfolio website.
+
+The entire website should feel like an interactive futuristic 3D experience.
+
+Every section should contain motion, depth, interaction, and storytelling.
+
+Use:
+- Three.js
+- React Three Fiber
+- Framer Motion
+- GSAP ScrollTrigger
+- React Spring
+
+=================================
+SCROLL ANIMATIONS
+=================================
+
+As the user scrolls:
+
+- Elements should smoothly reveal themselves.
+- Cards should float into view.
+- Sections should transition like scenes in a movie.
+- Background objects should move with parallax effects.
+- The camera should subtly animate through the experience.
+- 3D objects should rotate and respond to scroll position.
+- Text should animate with staggered reveals.
+- Project cards should emerge from depth.
+- Timeline items should animate progressively.
+- Skills should orbit around a central node.
+
+Scrolling should feel like exploring a futuristic digital world.
+
+=================================
+CLICK / TAP INTERACTIONS
+=================================
+
+When users tap or click elements:
+
+Skills:
+- Expand into detailed skill panels.
+- Trigger glow effects.
+- Display proficiency information.
+
+Projects:
+- Open immersive project showcases.
+- Expand into fullscreen project presentations.
+- Display project architecture and tech stack.
+- Animate project mockups.
+
+Certificates:
+- Open certificate viewer modal.
+- Zoom animation.
+- Fullscreen preview.
+- Download option.
+
+Buttons:
+- Ripple effect.
+- Glow animation.
+- Magnetic hover interaction.
+
+Social icons:
+- 3D rotation.
+- Particle burst effect.
+
+=================================
+3D HERO EXPERIENCE
+=================================
+
+Create a large 3D scene in the hero section.
+
+Include:
+
+- Rotating digital globe
+- AI neural network visualization
+- Floating code particles
+- Technology icons orbiting around the globe
+- Dynamic lighting
+- Camera movement
+
+The hero section should immediately impress recruiters.
+
+=================================
+3D SKILLS GALAXY
+=================================
+
+Skills should not be displayed as normal cards.
+
+Create a floating 3D technology galaxy.
+
+Technologies orbit around a central core.
+
+When a skill is clicked:
+
+- It expands.
+- Displays description.
+- Shows experience level.
+- Triggers particle effects.
+
+=================================
+3D PROJECT SHOWCASE
+=================================
+
+Projects should look like floating holographic displays.
+
+When clicked:
+
+- Open a fullscreen animated project showcase.
+- Camera zooms into the project.
+- Project information appears dynamically.
+- Showcase architecture diagrams.
+- Showcase tech stack.
+- Showcase screenshots.
+
+=================================
+3D EDUCATION TIMELINE
+=================================
+
+Create a futuristic timeline.
+
+As the user scrolls:
+
+- Timeline builds itself.
+- Milestones appear with animations.
+- Each milestone glows when active.
+
+=================================
+3D CERTIFICATE GALLERY
+=================================
+
+Certificates should appear inside a futuristic holographic gallery.
+
+When tapped:
+
+- Certificate lifts forward in 3D.
+- Opens fullscreen modal.
+- Allows zoom.
+- Allows swipe navigation.
+
+=================================
+BACKGROUND EFFECTS
+=================================
+
+Create a living background.
+
+Include:
+
+- Floating particles
+- Dynamic lighting
+- Animated grids
+- Neural network effects
+- Holographic waves
+- Energy lines
+- Depth effects
+
+=================================
+MICRO INTERACTIONS
+=================================
+
+Add:
+
+- Cursor glow effect
+- Magnetic buttons
+- Hover tilt effects
+- Smooth section transitions
+- Animated counters
+- Floating labels
+- Dynamic shadows
+
+=================================
+PERFORMANCE
+=================================
+
+Despite heavy animations:
+
+- Maintain smooth performance.
+- Lazy load 3D assets.
+- Optimize rendering.
+- Mobile-friendly interactions.
+
+=================================
+FINAL GOAL
+=================================
+
+The website should feel like entering a futuristic AI-powered command center built by an elite software engineer.
+
+Visitors should be amazed by the animations, interactivity, and visual storytelling while clearly understanding my skills, projects, certifications, and professional profile.
+
+This should look significantly better than a standard developer portfolio and stand out among thousands of portfolios seen by recruiters.

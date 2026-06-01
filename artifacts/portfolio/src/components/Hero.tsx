@@ -1,215 +1,252 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Download, ChevronDown, Github, Linkedin, Mail } from 'lucide-react';
+import { NeuralGlobe } from './NeuralGlobe';
 import resumePdf from "@assets/BOJANALA_VENUGOPAL_HITHESH_RESUME_1780316992479.pdf";
 
-export function Hero() {
+const ROLES = ['Python Developer', 'Full Stack Engineer', 'AI Enthusiast', 'Data Analyst'];
+
+function TypewriterRoles() {
+  const [roleIdx, setRoleIdx] = useState(0);
+  const [displayed, setDisplayed] = useState('');
+  const [phase, setPhase] = useState<'typing' | 'pause' | 'deleting'>('typing');
+
+  useEffect(() => {
+    const current = ROLES[roleIdx];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (phase === 'typing') {
+      if (displayed.length < current.length) {
+        timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 60);
+      } else {
+        timeout = setTimeout(() => setPhase('pause'), 1800);
+      }
+    } else if (phase === 'pause') {
+      timeout = setTimeout(() => setPhase('deleting'), 400);
+    } else {
+      if (displayed.length > 0) {
+        timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 35);
+      } else {
+        setRoleIdx(i => (i + 1) % ROLES.length);
+        setPhase('typing');
+      }
+    }
+    return () => clearTimeout(timeout);
+  }, [displayed, phase, roleIdx]);
+
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative pt-20">
-      <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="z-10"
-        >
+    <span style={{ color: '#FF6B00' }}>
+      {displayed}
+      <span
+        className="inline-block w-[2px] h-[1.1em] align-middle ml-0.5"
+        style={{ background: '#FF6B00', animation: 'cursorblink 1s step-end infinite' }}
+      />
+    </span>
+  );
+}
+
+function MagneticButton({
+  children, className, style, onClick, href, download, target, rel
+}: {
+  children: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+  onClick?: () => void;
+  href?: string;
+  download?: string;
+  target?: string;
+  rel?: string;
+}) {
+  const [delta, setDelta] = useState({ x: 0, y: 0 });
+  const strength = 0.35;
+
+  const handleMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    setDelta({ x: (e.clientX - cx) * strength, y: (e.clientY - cy) * strength });
+  };
+  const handleLeave = () => setDelta({ x: 0, y: 0 });
+
+  const props = {
+    className,
+    style: { ...style, transform: `translate(${delta.x}px, ${delta.y}px)`, transition: 'transform 0.2s cubic-bezier(.25,.46,.45,.94)' },
+    onMouseMove: handleMove,
+    onMouseLeave: handleLeave,
+    onClick,
+  };
+
+  if (href) {
+    return <a href={href} download={download} target={target} rel={rel} {...props}>{children}</a>;
+  }
+  return <button {...props}>{children}</button>;
+}
+
+const LINE1 = 'BOJANALA'.split('');
+const LINE2 = 'VENUGOPAL HITHESH'.split('');
+
+export function Hero() {
+  const { scrollY } = useScroll();
+  const heroY = useTransform(scrollY, [0, 600], [0, -80]);
+  const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
+
+  return (
+    <section id="hero" className="min-h-screen flex items-center justify-center relative pt-20 overflow-hidden">
+      <motion.div
+        style={{ y: heroY, opacity: heroOpacity }}
+        className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center"
+      >
+        {/* ── Left: Text ── */}
+        <div className="z-10">
           {/* Status badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.05 }}
             className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 rounded font-mono text-xs uppercase tracking-widest"
-            style={{
-              border: '1px solid rgba(255,107,0,0.3)',
-              background: 'rgba(255,107,0,0.06)',
-              color: '#FF6B00'
-            }}
+            style={{ border: '1px solid rgba(255,107,0,0.3)', background: 'rgba(255,107,0,0.06)', color: '#FF6B00' }}
           >
             <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#FF6B00' }} />
             Available for Opportunities
           </motion.div>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4" style={{ color: '#F5F5F5' }}>
-            BOJANALA <br />
+          {/* Name — two-line staggered character reveal */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-5">
+            {/* Line 1: BOJANALA — white */}
+            <span className="block whitespace-nowrap" style={{ color: '#F5F5F5' }}>
+              {LINE1.map((ch, i) => (
+                <motion.span
+                  key={`l1-${i}`}
+                  initial={{ opacity: 0.1, y: 18, filter: 'blur(5px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ delay: 0.1 + i * 0.03, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className="inline-block"
+                >
+                  {ch}
+                </motion.span>
+              ))}
+            </span>
+            {/* Line 2: VENUGOPAL HITHESH — gradient */}
             <span
-              className="text-transparent bg-clip-text"
-              style={{ backgroundImage: 'linear-gradient(90deg, #FF6B00, #FFB000, #B87333)' }}
+              className="block whitespace-nowrap"
+              style={{ backgroundImage: 'linear-gradient(90deg, #FF6B00, #FFB000, #B87333)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
             >
-              VENUGOPAL HITHESH
+              {LINE2.map((ch, i) => (
+                <motion.span
+                  key={`l2-${i}`}
+                  initial={{ opacity: 0.1, y: 18, filter: 'blur(5px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ delay: 0.35 + i * 0.025, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className={ch === ' ' ? 'inline-block w-3 md:w-4' : 'inline-block'}
+                >
+                  {ch === ' ' ? '\u00A0' : ch}
+                </motion.span>
+              ))}
             </span>
           </h1>
 
-          <h2 className="text-lg md:text-xl font-mono mb-6" style={{ color: '#71797E' }}>
-            &gt; Python Developer | Full Stack | AI Enthusiast
-          </h2>
+          {/* Typewriter role */}
+          <motion.h2
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.4 }}
+            className="text-lg md:text-xl font-mono mb-6 flex items-center gap-2"
+            style={{ color: '#71797E' }}
+          >
+            <span style={{ color: '#B87333' }}>&gt;</span>
+            <TypewriterRoles />
+          </motion.h2>
 
-          <p
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6 }}
             className="max-w-lg mb-8 text-base leading-relaxed pl-4 border-l-2"
             style={{ color: '#A8A8A8', borderColor: '#FF6B00' }}
           >
             Building scalable web applications, intelligent backend systems, and modern digital experiences.
             Dedicated to solving real-world problems through clean code, innovative thinking, and continuous learning.
-          </p>
+          </motion.p>
 
-          <div className="flex flex-wrap gap-4">
-            <a
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.8 }}
+            className="flex flex-wrap gap-4"
+          >
+            <MagneticButton
               href={resumePdf}
               download="Bojanala_Venugopal_Hithesh_Resume.pdf"
-              className="flex items-center gap-2 px-6 py-3 font-bold rounded transition-all duration-200"
-              style={{
-                background: '#FF6B00',
-                color: '#0A0A0A',
-                boxShadow: '0 0 0 0 rgba(255,107,0,0)'
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.background = '#FFB000';
-                el.style.boxShadow = '0 0 24px rgba(255,107,0,0.4)';
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.background = '#FF6B00';
-                el.style.boxShadow = '0 0 0 0 rgba(255,107,0,0)';
-              }}
+              className="flex items-center gap-2 px-6 py-3 font-bold rounded-lg relative overflow-hidden"
+              style={{ background: '#FF6B00', color: '#0A0A0A', boxShadow: '0 4px 24px rgba(255,107,0,0.4)' }}
             >
-              <Download size={18} />
-              Download Resume
-            </a>
-            <a
+              <Download size={18} /> Download Resume
+              <span className="absolute inset-0 rounded-lg pointer-events-none"
+                style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%)' }} />
+            </MagneticButton>
+
+            <MagneticButton
               href="#projects"
-              className="flex items-center gap-2 px-6 py-3 rounded transition-all duration-200 font-medium"
-              style={{
-                border: '1px solid rgba(168,168,168,0.3)',
-                color: '#A8A8A8',
-                background: 'rgba(255,255,255,0.02)'
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = 'rgba(255,107,0,0.5)';
-                el.style.color = '#FF6B00';
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = 'rgba(168,168,168,0.3)';
-                el.style.color = '#A8A8A8';
-              }}
+              className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium"
+              style={{ border: '1px solid rgba(255,107,0,0.3)', color: '#FF6B00', background: 'rgba(255,107,0,0.05)' }}
             >
               View Projects
-            </a>
-            <a
+            </MagneticButton>
+
+            <MagneticButton
               href="#contact"
-              className="flex items-center gap-2 px-6 py-3 rounded transition-all duration-200 font-medium"
-              style={{
-                border: '1px solid rgba(168,168,168,0.3)',
-                color: '#A8A8A8',
-                background: 'rgba(255,255,255,0.02)'
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = 'rgba(184,115,51,0.5)';
-                el.style.color = '#B87333';
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.borderColor = 'rgba(168,168,168,0.3)';
-                el.style.color = '#A8A8A8';
-              }}
+              className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium"
+              style={{ border: '1px solid rgba(168,168,168,0.2)', color: '#A8A8A8', background: 'rgba(255,255,255,0.02)' }}
             >
               Contact Me
-            </a>
-          </div>
+            </MagneticButton>
+          </motion.div>
 
-          <div className="flex gap-6 mt-10">
-            <a href="https://github.com/Hithesh30" target="_blank" rel="noreferrer"
-              className="transition-all duration-200 hover:scale-110"
-              style={{ color: '#71797E' }}
-              onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#F5F5F5'}
-              onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#71797E'}
-            >
-              <Github size={22} />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer"
-              className="transition-all duration-200 hover:scale-110"
-              style={{ color: '#71797E' }}
-              onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#FF6B00'}
-              onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#71797E'}
-            >
-              <Linkedin size={22} />
-            </a>
-            <a href="mailto:bvhithesh30@gmail.com"
-              className="transition-all duration-200 hover:scale-110"
-              style={{ color: '#71797E' }}
-              onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#B87333'}
-              onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#71797E'}
-            >
-              <Mail size={22} />
-            </a>
-          </div>
-        </motion.div>
-
-        {/* Right — engineering dial / instrument */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="hidden lg:flex justify-center relative z-10"
-        >
-          <div className="relative w-80 h-80 flex items-center justify-center">
-            {/* Outer ring */}
-            <div className="absolute inset-0 rounded-full"
-              style={{ border: '1px solid rgba(255,107,0,0.2)' }} />
-            {/* Spinning rings */}
-            <div className="absolute inset-0 rounded-full animate-spin"
-              style={{ borderTop: '1px solid rgba(255,107,0,0.5)', animationDuration: '12s' }} />
-            <div className="absolute inset-4 rounded-full animate-spin"
-              style={{ borderBottom: '1px solid rgba(184,115,51,0.4)', animationDuration: '8s', animationDirection: 'reverse' }} />
-            <div className="absolute inset-8 rounded-full animate-spin"
-              style={{ borderRight: '1px dashed rgba(255,176,0,0.3)', animationDuration: '18s' }} />
-
-            {/* Tick marks */}
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div
+          {/* Social icons */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2.0 }}
+            className="flex gap-6 mt-10"
+          >
+            {[
+              { icon: <Github size={22} />, href: 'https://github.com/bvhithesh012', color: '#F5F5F5' },
+              { icon: <Linkedin size={22} />, href: 'https://linkedin.com', color: '#FF6B00' },
+              { icon: <Mail size={22} />, href: 'mailto:bvhithesh30@gmail.com', color: '#B87333' },
+            ].map((s, i) => (
+              <motion.a
                 key={i}
-                className="absolute w-full h-full"
-                style={{ transform: `rotate(${i * 30}deg)` }}
+                href={s.href}
+                target={i < 2 ? '_blank' : undefined}
+                rel={i < 2 ? 'noreferrer' : undefined}
+                whileHover={{ scale: 1.2, rotate: [-5, 5, 0], color: s.color }}
+                whileTap={{ scale: 0.9 }}
+                style={{ color: '#71797E' }}
+                className="transition-colors duration-200"
               >
-                <div
-                  className="absolute top-0 left-1/2 -translate-x-1/2 w-px"
-                  style={{
-                    height: i % 3 === 0 ? '12px' : '6px',
-                    background: i % 3 === 0 ? '#FF6B00' : 'rgba(168,168,168,0.3)'
-                  }}
-                />
-              </div>
+                {s.icon}
+              </motion.a>
             ))}
+          </motion.div>
+        </div>
 
-            {/* Centre card */}
-            <div
-              className="w-44 h-44 rounded-full flex items-center justify-center relative overflow-hidden"
-              style={{
-                background: 'rgba(17,17,17,0.9)',
-                border: '1px solid rgba(255,107,0,0.25)',
-                backdropFilter: 'blur(12px)'
-              }}
-            >
-              <div className="absolute inset-0 rounded-full opacity-20"
-                style={{ background: 'radial-gradient(circle at center, #FF6B00, transparent 65%)' }} />
-              <div className="text-center font-mono z-10">
-                <div className="text-4xl font-bold mb-1" style={{ color: '#FF6B00' }}>2026</div>
-                <div className="text-[10px] tracking-[0.25em] uppercase" style={{ color: '#71797E' }}>B.Tech IT</div>
-                <div className="text-[10px] tracking-[0.15em] uppercase mt-1" style={{ color: '#A8A8A8' }}>Graduating</div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
+        {/* ── Right: Neural Globe ── */}
+        <div className="hidden lg:flex justify-center items-center relative z-10">
+          <NeuralGlobe />
+        </div>
+      </motion.div>
 
+      {/* Scroll indicator */}
       <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 2.2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
         style={{ color: '#2C3539' }}
       >
-        <ChevronDown size={28} />
+        <span className="font-mono text-[10px] uppercase tracking-widest" style={{ color: '#3a3a3a' }}>scroll</span>
+        <ChevronDown size={24} />
       </motion.div>
     </section>
   );

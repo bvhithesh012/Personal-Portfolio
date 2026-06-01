@@ -9,21 +9,13 @@ import { AITools } from './components/AITools';
 import { Certificates } from './components/Certificates';
 import { ThreeBackground } from './components/ThreeBackground';
 import { LoadingScreen } from './components/LoadingScreen';
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Cursor } from './components/Cursor';
+import { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { Github, Linkedin } from 'lucide-react';
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   return (
     <>
@@ -33,31 +25,29 @@ function App() {
 
       {!loading && (
         <div className="relative w-full selection:bg-orange-500/20" style={{ color: '#F5F5F5' }}>
-          {/* Custom cursor — burnt orange */}
-          <motion.div
-            className="fixed top-0 left-0 w-6 h-6 rounded-full pointer-events-none z-[100] mix-blend-screen hidden md:block"
-            style={{ border: '1px solid #FF6B00', background: 'rgba(255,107,0,0.12)' }}
-            animate={{ x: mousePosition.x - 12, y: mousePosition.y - 12 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200, mass: 0.5 }}
-          />
-          <motion.div
-            className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full pointer-events-none z-[100] hidden md:block"
-            style={{ background: '#FF6B00', boxShadow: '0 0 8px #FF6B00' }}
-            animate={{ x: mousePosition.x - 3, y: mousePosition.y - 3 }}
-            transition={{ type: 'spring', damping: 40, stiffness: 400, mass: 0.1 }}
-          />
+          {/* Premium custom cursor */}
+          <div className="hidden md:block">
+            <Cursor />
+          </div>
 
           <ThreeBackground />
           <Navigation />
 
           <main>
             <Hero />
+            <div className="section-separator" />
             <About />
+            <div className="section-separator" />
             <Skills />
+            <div className="section-separator" />
             <Education />
+            <div className="section-separator" />
             <Certificates />
+            <div className="section-separator" />
             <Projects />
+            <div className="section-separator" />
             <AITools />
+            <div className="section-separator" />
             <Contact />
           </main>
 
