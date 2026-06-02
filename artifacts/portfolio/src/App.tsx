@@ -1,6 +1,7 @@
 import { Navigation } from './components/Navigation';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
+import { Interests } from './components/Interests';
 import { Skills } from './components/Skills';
 import { Education } from './components/Education';
 import { Projects } from './components/Projects';
@@ -37,6 +38,8 @@ function App() {
             <Hero />
             <div className="section-separator" />
             <About />
+            <div className="section-separator" />
+            <Interests />
             <div className="section-separator" />
             <Skills />
             <div className="section-separator" />

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { User, Target, Heart, Languages, CheckCircle2 } from 'lucide-react';
+import { User, Target, Languages, CheckCircle2 } from 'lucide-react';
 
 export function About() {
   const highlights = [
@@ -107,35 +107,6 @@ export function About() {
           </motion.div>
 
           <div className="lg:col-span-5 flex flex-col gap-6">
-            {/* Interests */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.15 }}
-              className="rounded-xl p-6 relative overflow-hidden"
-              style={{
-                background: 'rgba(17,17,17,0.7)',
-                border: '1px solid rgba(255,255,255,0.06)',
-                backdropFilter: 'blur(12px)'
-              }}
-            >
-              <div className="flex items-center gap-3 mb-5">
-                <Heart size={22} style={{ color: '#B87333' }} />
-                <h3 className="text-xl font-bold" style={{ color: '#F5F5F5' }}>Interests</h3>
-              </div>
-              <ul className="space-y-3">
-                {personalInterests.map((interest, i) => (
-                  <li key={i} className="flex justify-between items-center pb-2 last:pb-0"
-                    style={{ borderBottom: i < personalInterests.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}
-                  >
-                    <span className="font-medium" style={{ color: '#F5F5F5' }}>{interest.name}</span>
-                    <span className="text-xs font-mono" style={{ color: '#71797E' }}>{interest.desc}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-
             {/* Languages */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
