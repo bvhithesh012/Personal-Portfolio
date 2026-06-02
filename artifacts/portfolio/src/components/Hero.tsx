@@ -82,8 +82,8 @@ function MagneticButton({
   return <button {...props}>{children}</button>;
 }
 
-const LINE1 = 'BOJANALA'.split('');
-const LINE2 = 'VENUGOPAL HITHESH'.split('');
+const FULL_NAME = 'BOJANALA VENUGOPAL HITHESH';
+const NAME_WORDS = ['BOJANALA', 'VENUGOPAL', 'HITHESH'] as const;
 
 export function Hero() {
   const { scrollY } = useScroll();
@@ -110,39 +110,52 @@ export function Hero() {
             Available for Opportunities
           </motion.div>
 
-          {/* Name — two-line staggered character reveal */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-5">
-            {/* Line 1: BOJANALA — white */}
-            <span className="block whitespace-nowrap" style={{ color: '#F5F5F5' }}>
-              {LINE1.map((ch, i) => (
-                <motion.span
-                  key={`l1-${i}`}
-                  initial={{ opacity: 0.1, y: 18, filter: 'blur(5px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  transition={{ delay: 0.1 + i * 0.03, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                  className="inline-block"
-                >
-                  {ch}
-                </motion.span>
-              ))}
-            </span>
-            {/* Line 2: VENUGOPAL HITHESH — gradient */}
-            <span
+          {/* ── Full name: BOJANALA VENUGOPAL HITHESH ──
+               All three words render immediately — never hidden, never truncated.
+               Subtle slide-up on mount is cosmetic only; opacity starts at 1. */}
+          <h1
+            className="font-black leading-[1.05] mb-5 uppercase"
+            aria-label={FULL_NAME}
+            style={{ fontSize: 'clamp(2rem, 6.5vw, 4.5rem)' }}
+          >
+            {/* BOJANALA — white */}
+            <motion.span
               className="block whitespace-nowrap"
-              style={{ backgroundImage: 'linear-gradient(90deg, #FF6B00, #FFB000, #B87333)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+              initial={{ opacity: 1, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              style={{ color: '#F5F5F5' }}
             >
-              {LINE2.map((ch, i) => (
-                <motion.span
-                  key={`l2-${i}`}
-                  initial={{ opacity: 0.1, y: 18, filter: 'blur(5px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  transition={{ delay: 0.35 + i * 0.025, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                  className={ch === ' ' ? 'inline-block w-3 md:w-4' : 'inline-block'}
-                >
-                  {ch === ' ' ? '\u00A0' : ch}
-                </motion.span>
-              ))}
-            </span>
+              BOJANALA
+            </motion.span>
+            {/* VENUGOPAL — gradient */}
+            <motion.span
+              className="block whitespace-nowrap"
+              initial={{ opacity: 1, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.07, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                backgroundImage: 'linear-gradient(90deg,#FF6B00,#FFB000)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              VENUGOPAL
+            </motion.span>
+            {/* HITHESH — gradient brighter */}
+            <motion.span
+              className="block whitespace-nowrap"
+              initial={{ opacity: 1, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.14, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                backgroundImage: 'linear-gradient(90deg,#FFB000,#B87333)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              HITHESH
+            </motion.span>
           </h1>
 
           {/* Typewriter role */}
