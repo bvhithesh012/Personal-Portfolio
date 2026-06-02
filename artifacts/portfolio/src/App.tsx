@@ -97,6 +97,9 @@ function App() {
                 ↑
               </button>
 
+              <p className="font-mono text-sm font-bold tracking-widest text-center uppercase" style={{ color: '#71797E' }}>
+                BOJANALA VENUGOPAL <span style={{ color: '#FF6B00' }}>HITHESH</span>
+              </p>
               <p className="text-xs font-mono" style={{ color: '#2C3539' }}>
                 © 2026 Bojanala Venugopal Hithesh. All rights reserved.
               </p>

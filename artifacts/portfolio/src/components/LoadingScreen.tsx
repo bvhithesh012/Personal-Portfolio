@@ -21,7 +21,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
           backgroundSize: '60px 60px'
         }} />
 
-        <div className="relative flex flex-col items-center gap-8 z-10">
+        <div className="relative flex flex-col items-center gap-8 z-10 px-6">
           {/* Animated hexagon logo */}
           <motion.div
             initial={{ scale: 0.6, opacity: 0 }}
@@ -55,7 +55,7 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
                 x="50" y="56"
                 textAnchor="middle"
                 fill="#FFB000"
-                fontSize="18"
+                fontSize="16"
                 fontFamily="Space Mono, monospace"
                 fontWeight="700"
                 initial={{ opacity: 0 }}
@@ -67,16 +67,25 @@ export function LoadingScreen({ onComplete }: { onComplete: () => void }) {
             </svg>
           </motion.div>
 
-          {/* Name reveal */}
-          <div className="overflow-hidden">
+          {/* Full name — never abbreviated */}
+          <div className="overflow-hidden text-center">
             <motion.h1
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.55, delay: 0.5 }}
-              className="text-xl md:text-3xl font-bold tracking-[0.3em] uppercase"
+              className="font-bold tracking-[0.2em] uppercase leading-snug"
               style={{ color: '#F5F5F5' }}
             >
-              BOJANALA V. HITHESH
+              {/* Desktop: one line */}
+              <span className="hidden md:block text-xl lg:text-2xl">
+                BOJANALA VENUGOPAL{' '}
+                <span style={{ color: '#FF6B00' }}>HITHESH</span>
+              </span>
+              {/* Mobile: two lines */}
+              <span className="block md:hidden text-lg text-center">
+                BOJANALA VENUGOPAL<br />
+                <span style={{ color: '#FF6B00' }}>HITHESH</span>
+              </span>
             </motion.h1>
           </div>
 

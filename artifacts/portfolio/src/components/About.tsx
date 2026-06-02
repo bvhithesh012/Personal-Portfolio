@@ -52,9 +52,14 @@ export function About() {
             <div className="absolute top-0 right-0 w-40 h-40 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
               style={{ background: 'radial-gradient(circle, rgba(255,107,0,0.08), transparent)' }} />
 
-            <div className="flex items-center gap-4 mb-6">
-              <User size={26} style={{ color: '#FF6B00' }} />
-              <h3 className="text-2xl font-bold" style={{ color: '#F5F5F5' }}>System Identity</h3>
+            <div className="flex items-start gap-4 mb-6">
+              <User size={26} style={{ color: '#FF6B00', flexShrink: 0, marginTop: 4 }} />
+              <div>
+                <h3 className="text-2xl font-bold" style={{ color: '#F5F5F5' }}>System Identity</h3>
+                <p className="font-mono text-sm mt-1 tracking-wider" style={{ color: '#FF6B00' }}>
+                  BOJANALA VENUGOPAL HITHESH
+                </p>
+              </div>
             </div>
 
             <div className="space-y-4 text-sm md:text-base leading-relaxed font-mono" style={{ color: '#A8A8A8' }}>
